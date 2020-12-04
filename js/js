@@ -1,0 +1,24 @@
+function createMap(){
+    var mbAttr = '<a href="http://openstreetmap.org">OpenStreetMap</a> |' +' <a href="http://mapbox.com">Mapbox</a> | <a href="https://https://github.com/Darth-Hood">John Hood</a>';
+    var apitoken = 'pk.eyJ1Ijoic3BhY2Vkb2cyMyIsImEiOiJja2lhcTFnd3UwY25pMnluemtreXU5MWN0In0.2cx8e5nhLR-lqFs1rTCENQ' 
+    var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}'; 
+    var mbStyleUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/256/{z}/{x}/{y}?access_token={token}'; 
+    var darkTerrain = L.tileLayer(mbStyleUrl, {id: 'spacedog23/ckiaq4go5001e1akuzwtbhcgs', token: apitoken,  attribution: mbAttr});
+    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', token: apitoken, attribution: mbAttr});
+    var dark  = L.tileLayer(mbUrl, {id: 'mapbox.dark', token: apitoken,  attribution: mbAttr});
+    var outdoors = L.tileLayer(mbUrl, {id: 'mapbox.outdoors', token: apitoken,  attribution: mbAttr});
+    var map = L.map('map', {
+        center: [31.00, -5],//Coordinated to center the map
+        zoom: 6, //zoom level
+        layers:darkTerrain //default base
+    });
+    var baseLayers = {
+		"Outdoors": outdoors,
+        "Grayscale": grayscale,
+		"Darkscale": dark,
+        "Dark Entries": darkTerrain
+    };
+    L.control.layers(baseLayers).addTo(map);
+};
+
+$(document).ready(createMap);
